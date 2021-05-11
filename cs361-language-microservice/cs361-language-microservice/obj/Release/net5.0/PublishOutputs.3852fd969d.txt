@@ -1,0 +1,12 @@
+C:\Users\janes\OneDrive - Oregon State University\cs-361-project\cs361-language-microservice\cs361-language-microservice\obj\Release\net5.0\PubTmp\Out\cs361-language-microservice.exe
+C:\Users\janes\OneDrive - Oregon State University\cs-361-project\cs361-language-microservice\cs361-language-microservice\obj\Release\net5.0\PubTmp\Out\appsettings.Development.json
+C:\Users\janes\OneDrive - Oregon State University\cs-361-project\cs361-language-microservice\cs361-language-microservice\obj\Release\net5.0\PubTmp\Out\appsettings.json
+C:\Users\janes\OneDrive - Oregon State University\cs-361-project\cs361-language-microservice\cs361-language-microservice\obj\Release\net5.0\PubTmp\Out\cs361-language-microservice.dll
+C:\Users\janes\OneDrive - Oregon State University\cs-361-project\cs361-language-microservice\cs361-language-microservice\obj\Release\net5.0\PubTmp\Out\cs361-language-microservice.deps.json
+C:\Users\janes\OneDrive - Oregon State University\cs-361-project\cs361-language-microservice\cs361-language-microservice\obj\Release\net5.0\PubTmp\Out\cs361-language-microservice.runtimeconfig.json
+C:\Users\janes\OneDrive - Oregon State University\cs-361-project\cs361-language-microservice\cs361-language-microservice\obj\Release\net5.0\PubTmp\Out\cs361-language-microservice.pdb
+C:\Users\janes\OneDrive - Oregon State University\cs-361-project\cs361-language-microservice\cs361-language-microservice\obj\Release\net5.0\PubTmp\Out\Microsoft.OpenApi.dll
+C:\Users\janes\OneDrive - Oregon State University\cs-361-project\cs361-language-microservice\cs361-language-microservice\obj\Release\net5.0\PubTmp\Out\Newtonsoft.Json.dll
+C:\Users\janes\OneDrive - Oregon State University\cs-361-project\cs361-language-microservice\cs361-language-microservice\obj\Release\net5.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\janes\OneDrive - Oregon State University\cs-361-project\cs361-language-microservice\cs361-language-microservice\obj\Release\net5.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\janes\OneDrive - Oregon State University\cs-361-project\cs361-language-microservice\cs361-language-microservice\obj\Release\net5.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll
