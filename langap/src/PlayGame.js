@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import {languageMapping} from './LanguageConsts';
 import TranslationBlanks from './TranslationBlanks';
+import Loader from "react-loader-spinner";
+import hideGameAndShowLanguageSelection from './App';
+
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function PlayGame(props) {
   const [baseLanguageText, setBaseLanguageText] = useState('');
   const [translatedText, setTranslatedText] = useState('');
+  const [reserveBaseLanguageText, setReserveBaseLanguageText] = useState('');
+  const [reserveTranslatedText, setReserveTranslatedText] = useState('');
   const [baseLanguageCode, setBaseLanguageCode] = useState(props.baseLanguage);
   const [targetLanguageCode, setTargetLanguageCode] = useState(props.targetLanguage);
   const [wonGame, setWonGame] = useState(false);
   const [gaveUp, setGaveUp] = useState(false);
   const [gamesWon, setGamesWon] = useState(0);
   const [gamesPlayed, setGamesPlayed] = useState(0);
+  const [loadScreen, setLoadScreen] = useState(true);
   var baseLanguageLabel = ""
   var targetLanguageLabel = ""
   for (var i = 0; i < languageMapping.length; i++) {
@@ -24,6 +31,7 @@ function PlayGame(props) {
 
   useEffect(() => {
     getRandomTextAndTranslate();
+    getRandomTextAndTranslateReserve();
   }, [])
 
   function gameWon() {
@@ -38,9 +46,44 @@ function PlayGame(props) {
   }
 
   function getNewPuzzle() {
-    getRandomTextAndTranslate();
+    getRandomTextAndTranslateReserve();
     setGaveUp(false);
     setWonGame(false);
+  }
+
+  function translateTextReserve(text, language, setBase) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ Text: text })
+    };
+    fetch('https://translation-microservice.azurewebsites.net?toLanguageCode=' + language, requestOptions)
+        .then(response => response.text())
+        .then(data => {
+          if (setBase) {
+            setReserveBaseLanguageText(data);
+          }
+          else {
+            setReserveTranslatedText(data);
+          }
+        });
+  }
+
+  function getRandomTextAndTranslateReserve() {
+    setBaseLanguageText(reserveBaseLanguageText);
+    setTranslatedText(reserveTranslatedText);
+    fetch("https://daniel-yu.herokuapp.com/get_random", )
+      .then(response => response.json())
+      .then(result => {
+        var firstSentence = result.content.split('.')[0];
+        if (baseLanguageCode != 'en') {
+          translateTextReserve(firstSentence, baseLanguageCode, true);
+        }
+        else {
+          setReserveBaseLanguageText(firstSentence);
+        }
+        translateTextReserve(firstSentence, targetLanguageCode, false);
+      })
   }
 
   function translateText(text, language, setBase) {
@@ -57,15 +100,16 @@ function PlayGame(props) {
           }
           else {
             setTranslatedText(data);
+            setLoadScreen(false);
           }
         });
   }
 
-  function getRandomTextAndTranslate() {
-    fetch("https://backendcs361.herokuapp.com/abstract/Special:Random", )
-      .then(response => response.text())
+    function getRandomTextAndTranslate() {
+    fetch("https://daniel-yu.herokuapp.com/get_random", )
+      .then(response => response.json())
       .then(result => {
-        var firstSentence = result.split('.')[0].substring(1);
+        var firstSentence = result.content.split('.')[0];
         if (baseLanguageCode != 'en') {
           translateText(firstSentence, baseLanguageCode, true);
         }
@@ -76,19 +120,36 @@ function PlayGame(props) {
       })
   }
 
-  return (
+  function onReturnClicked() {
+    props.onComplete();
+  }
+
+    return (
     <div style={{margin: '10px'}}>
       {wonGame ? <h2 style={{outline: "1px solid black", width: "fit-content", padding: "10px", background: "linear-gradient(to right, red, orange , yellow, green, blue, violet)"}}>Congrats! You did it!</h2> : null}
       {gaveUp ? <h2 style={{outline: "1px solid black", width: "fit-content", padding: "10px", background: "linear-gradient(to right, pink, white)"}}>Good Try</h2> : null}
     <div style={{display:'flex', width: '100%', flexDirection: 'row'}}>
       <div style={{padding:'10px', flex: '1', backgroundColor:"whiteSmoke"}}>
         <h4>Default Language: {baseLanguageLabel}</h4>
-        {baseLanguageText}
+        {loadScreen ?
+        <Loader
+         type="Puff"
+         color="#00BFFF"
+         height={100}
+         width={100}
+       /> : null}{baseLanguageText}
       </div>
       <div style={{padding:'10px', flex: '1', backgroundColor:"lightGrey"}}>
         <h4>Learning Language: {targetLanguageLabel}</h4>
-        <TranslationBlanks key={translatedText} showAll={wonGame || gaveUp} text={translatedText} onSuccess={gameWon}/>
-      </div>
+        {loadScreen ?
+        <Loader
+         type="Puff"
+         color="pink"
+         height={100}
+         width={100}
+       />:
+       <TranslationBlanks key={translatedText} showAll={wonGame || gaveUp} text={translatedText} onSuccess={gameWon}/>}
+       </div>
     </div>
     <div>
         {wonGame || gaveUp ?
@@ -97,8 +158,10 @@ function PlayGame(props) {
         <button type="button" onClick={showGaveUp}>Give Up</button>}
       </div>
       <div>
+        <button type="button" onClick={onReturnClicked}>Return to Language Selection</button>
+      </div>
+      <div>
       <h3>Wins: {gamesWon}, Games Played: {gamesPlayed}</h3>
-
       </div>
     </div>
   );

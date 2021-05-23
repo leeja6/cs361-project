@@ -22,11 +22,13 @@ function TranslationBlanks(props) {
   }
 
   const words = wordArray.map((word, index) => {
+    var length = wordArray.length;
     if (!props.showAll && hiddenIndexes.has(index)) {
-      return <span><input type="text" id={index} onChange={onInputChanged} size={wordArray[index].length}/> </span>;
+      return index == length - 1 ? <span><input type="text" id={index} onChange={onInputChanged} size={wordArray[index].length}/>. </span> :
+       <span><input type="text" id={index} onChange={onInputChanged} size={wordArray[index].length}/> </span>;
     }
     else {
-      return word + ' ';
+      return index == length - 1 && word[word.length - 1] != '.' ? word + '.' : word + ' ';
     }
   });
 

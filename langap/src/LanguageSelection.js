@@ -1,6 +1,12 @@
 import {languageMapping} from './LanguageConsts';
+import './App.css';
+import React, { Component, useState } from 'react';
+import Select from 'react-select';
+import Button from 'react-bootstrap/Button';
 
 function LanguageSelection(props) {
+  const [baseLanguageMapping, setBaseLanguageMapping] = useState(languageMapping);
+  const [targetLanguageMapping, setTargetLanguageMapping] = useState(languageMapping);
 
   var baseLanguageOptions = [];
   for (var i = 0; i < languageMapping.length; i++) {
@@ -18,11 +24,25 @@ function LanguageSelection(props) {
   }
 
   function handleBaseLanguageChange(e) {
-    props.onSetBaseLanguage(e.target.value);
-  }
+    var newLanguageMapping = [...languageMapping];
+    props.onSetBaseLanguage(e.value);
+    for ( var i = 0; i < newLanguageMapping.length; i++){
+        if ( newLanguageMapping[i] === e) {
+            newLanguageMapping.splice(i, 1);
+        }
+      }
+    setTargetLanguageMapping(newLanguageMapping);
+    }
 
   function handleTargetLanguageChange(e) {
-    props.onSetTargetLanguage(e.target.value);
+    var newBaseLanguageMapping = [...languageMapping];
+    props.onSetTargetLanguage(e.value);
+    for ( var i = 0; i < newBaseLanguageMapping.length; i++){
+        if ( newBaseLanguageMapping[i] === e) {
+            newBaseLanguageMapping.splice(i, 1);
+        }
+      }
+    setBaseLanguageMapping(newBaseLanguageMapping);
   }
 
   function onPlayClicked() {
@@ -31,20 +51,17 @@ function LanguageSelection(props) {
 
   return (
     <div>
-    <div>
+    <div style={{width: '400px'}}>
       <label for="baseLanguageSelect">Choose your default language: </label>
-      <select name="baseLanguageSelect" onChange={handleBaseLanguageChange} id="baseLanguageSelect">
-        {baseLanguageOptions}
-      </select>
-    </div>
-    <div>
-      <label for="targetLanguageSelect">Choose your learning language: </label>
-      <select name="targetLanguageSelect" onChange={handleTargetLanguageChange} id="targetLanguageSelect">
-        {targetLanguageOptions}
-      </select>
+      <Select isSearchable menuPlacement="auto" onChange={handleBaseLanguageChange} options={baseLanguageMapping} name="baseLanguageSelect" id="baseLanguageSelect" autoFocus={true}/>
     </div>
     <br/>
-    <button type="button" onClick={onPlayClicked}>Play</button>
+    <div style={{width: '400px'}}>
+      <label for="targetLanguageSelect">Choose your learning language: </label>
+      <Select isSearchable menuPlacement="auto" onChange={handleTargetLanguageChange} options={targetLanguageMapping} name="targetLanguageSelect"id="targetLanguageSelect" autoFocus={true}/>
+    </div>
+    <br/>
+    <Button style={{padding: "5px 10px", fontSize: "medium"}} type="button" onClick={onPlayClicked}>Play</Button>
     </div>
   );
 }

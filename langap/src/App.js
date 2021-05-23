@@ -13,6 +13,11 @@ function App() {
     setShowGame(true);
   }
 
+  function hideGameAndShowLanguageSelection() {
+    setShowGame(false);
+    setShowLanguageSelection(true);
+  }
+
   return (
     <div>
     <h1 style={{margin: '10px'}}style={{margin: '10px'}}> LanGAPs </h1>
@@ -24,7 +29,7 @@ function App() {
       : null}
       { showGame ?
       <div>
-        <PlayGame baseLanguage={baseLanguage} targetLanguage={targetLanguage}/>
+        <PlayGame baseLanguage={baseLanguage} targetLanguage={targetLanguage} onComplete={hideGameAndShowLanguageSelection}/>
       </div>
       : null}
     </div>
