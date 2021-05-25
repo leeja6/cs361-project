@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {languageMapping} from './LanguageConsts';
 import TranslationBlanks from './TranslationBlanks';
 import Loader from "react-loader-spinner";
-import hideGameAndShowLanguageSelection from './App';
 
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
@@ -15,8 +14,6 @@ function PlayGame(props) {
   const [targetLanguageCode, setTargetLanguageCode] = useState(props.targetLanguage);
   const [wonGame, setWonGame] = useState(false);
   const [gaveUp, setGaveUp] = useState(false);
-  const [gamesWon, setGamesWon] = useState(0);
-  const [gamesPlayed, setGamesPlayed] = useState(0);
   const [loadScreen, setLoadScreen] = useState(true);
   var baseLanguageLabel = ""
   var targetLanguageLabel = ""
@@ -36,13 +33,13 @@ function PlayGame(props) {
 
   function gameWon() {
     setWonGame(true);
-    setGamesWon(gamesWon + 1);
-    setGamesPlayed(gamesPlayed + 1);
+    props.onSetGamesWon(props.gamesWon + 1);
+    props.onSetGamesPlayed(props.gamesPlayed + 1);
   }
 
   function showGaveUp() {
     setGaveUp(true);
-    setGamesPlayed(gamesPlayed + 1);
+    props.onSetGamesPlayed(props.gamesPlayed + 1);
   }
 
   function getNewPuzzle() {
@@ -131,13 +128,13 @@ function PlayGame(props) {
     <div style={{display:'flex', width: '100%', flexDirection: 'row'}}>
       <div style={{padding:'10px', flex: '1', backgroundColor:"whiteSmoke"}}>
         <h4>Default Language: {baseLanguageLabel}</h4>
-        {loadScreen ?
+        {baseLanguageText}{loadScreen ?
         <Loader
          type="Puff"
          color="#00BFFF"
          height={100}
          width={100}
-       /> : null}{baseLanguageText}
+       /> : <span>.</span>}
       </div>
       <div style={{padding:'10px', flex: '1', backgroundColor:"lightGrey"}}>
         <h4>Learning Language: {targetLanguageLabel}</h4>
@@ -155,13 +152,13 @@ function PlayGame(props) {
         {wonGame || gaveUp ?
         <button type="button" onClick={getNewPuzzle}>New Puzzle</button>
         :
-        <button type="button" onClick={showGaveUp}>Give Up</button>}
+        <button type="button" title="Fill in all the remaining missing words and finish this round" onClick={showGaveUp}>Give Up</button>}
       </div>
       <div>
         <button type="button" onClick={onReturnClicked}>Return to Language Selection</button>
       </div>
       <div>
-      <h3>Wins: {gamesWon}, Games Played: {gamesPlayed}</h3>
+      <h3>Wins: {props.gamesWon}, Games Played: {props.gamesPlayed}</h3>
       </div>
     </div>
   );

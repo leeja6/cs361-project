@@ -7,6 +7,8 @@ function App() {
   const [targetLanguage, setTargetLanguage] = useState('es');
   const [showLanguageSelection, setShowLanguageSelection] = useState(true);
   const [showGame, setShowGame] = useState(false);
+  const [gamesWon, setGamesWon] = useState(0);
+  const [gamesPlayed, setGamesPlayed] = useState(0);
 
   function hideLanguageSelectionAndShowGame() {
     setShowLanguageSelection(false);
@@ -29,7 +31,7 @@ function App() {
       : null}
       { showGame ?
       <div>
-        <PlayGame baseLanguage={baseLanguage} targetLanguage={targetLanguage} onComplete={hideGameAndShowLanguageSelection}/>
+        <PlayGame baseLanguage={baseLanguage} targetLanguage={targetLanguage} gamesWon={gamesWon} gamesPlayed={gamesPlayed} onSetGamesWon={setGamesWon} onSetGamesPlayed={setGamesPlayed} onComplete={hideGameAndShowLanguageSelection}/>
       </div>
       : null}
     </div>
