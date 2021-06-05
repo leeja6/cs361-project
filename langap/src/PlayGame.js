@@ -179,7 +179,7 @@ function PlayGame(props) {
         <button type="button" title="Fill in all remaining blanks to finish the round" onClick={showGaveUp}>Give Up</button></div>}
       </div>
       <div>
-        <button type="button" onClick={onReturnClicked}>Return to Language Selection</button>
+        <button type="button" title="Return to home screen to choose new languages" onClick={onReturnClicked}>Return to Language Selection</button>
       </div>
       <div>
       <h3>Wins: {props.gamesWon}, Games Played: {props.gamesPlayed}</h3>
