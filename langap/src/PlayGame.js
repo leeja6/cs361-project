@@ -63,6 +63,9 @@ function PlayGame(props) {
     fetch('https://translation-microservice.azurewebsites.net?toLanguageCode=' + language, requestOptions)
         .then(response => response.text())
         .then(data => {
+          if (data.charAt(data.length - 1) == '.') {
+            data = data.substring(0, data.length - 1);
+          }
           if (setBase) {
             setReserveBaseLanguageText(data);
           }
@@ -81,6 +84,9 @@ function PlayGame(props) {
     fetch('https://translation-microservice.azurewebsites.net?toLanguageCode=' + language, requestOptions)
         .then(response => response.text())
         .then(data => {
+          if (data.charAt(data.length - 1) == '.') {
+            data = data.substring(0, data.length - 1);
+          }
           if (setBase) {
             setBaseLanguageText(data);
           }
@@ -98,6 +104,10 @@ function PlayGame(props) {
       .then(response => response.json())
       .then(result => {
         var firstSentence = result.content.split('.')[0];
+        if (firstSentence.length < 50) {
+          getRandomTextAndTranslateReserve();
+          return;
+        }
         if (baseLanguageCode != 'en') {
           translateTextReserve(firstSentence, baseLanguageCode, true);
         }
@@ -115,6 +125,10 @@ function PlayGame(props) {
       .then(response => response.json())
       .then(result => {
         var firstSentence = result.content.split('.')[0];
+        if (firstSentence.length < 50) {
+          getRandomTextAndTranslate();
+          return;
+        }
         if (baseLanguageCode != 'en') {
           translateText(firstSentence, baseLanguageCode, true);
         }
