@@ -37,7 +37,7 @@ function App() {
   return (
     <div className={`App ${theme}`}>
     <button style={{marginLeft: '10px'}} type="button" onClick={changeTheme}>{themeButtonText}</button>
-    <h1 style={{margin: '10px'}}style={{margin: '10px'}}> LanGAPs </h1>
+    <h1 style={{margin: '10px'}}style={{margin: '10px'}}> LanGAP </h1>
     <h3 style={{margin: '10px'}}> a word-completion language-learning game </h3>
       { showLanguageSelection ?
       <div style={{margin: '10px'}}>
@@ -47,7 +47,7 @@ function App() {
       { showGame ?
       <div>
         <PlayGame
-          baseLanguage={baseLanguage} 
+          baseLanguage={baseLanguage}
           targetLanguage={targetLanguage}
           gamesWon={gamesWon}
           gamesPlayed={gamesPlayed}
