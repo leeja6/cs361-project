@@ -1,0 +1,13 @@
+.light {
+  text-align: left;
+  background: white;
+  padding: 20px;
+}
+
+.dark {
+  text-align: left;
+  background: #333333;
+  color: #BBBBBB;
+  height: 100vh;
+  padding: 20px;
+}
